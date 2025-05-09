@@ -17,8 +17,23 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from bookstore.views import BookViewSet, OrderViewSet
+from .views import HomeView, ProtectedView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+router = DefaultRouter()
+router.register(r'books', BookViewSet)
+router.register(r'orders', OrderViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/', include('bookstore.urls')),
-]
+    path('', HomeView.as_view()),  # A URL raiz redireciona para a HomeView
+    path('api/', include('bookstore.urls')),  # Inclui as URLs da app bookstore
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('protected/', ProtectedView.as_view(), name='protected'),
+] 
