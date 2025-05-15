@@ -12,6 +12,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - bookstore-network
 
   web:
     build:
@@ -30,6 +32,12 @@ services:
       DB_PASSWORD: postgres
       DB_HOST: db
       DB_PORT: 5432
+    networks:
+      - bookstore-network
 
 volumes:
   postgres_data:
+
+networks:
+  bookstore-network:
+    driver: bridge
