@@ -30,7 +30,13 @@ jobs:
       run: docker ps -a
 
     - name: Testar execução do container
-      run: docker run --rm --env-file .env bookstoremp
+      run: |
+        docker run --rm \
+          -e DEBUG=${{ secrets.DEBUG }} \
+          -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
+          -e ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} \
+          -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+          bookstoremp
 
     - name: Listar containers depois
       run: docker ps -a
