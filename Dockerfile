@@ -1,4 +1,3 @@
-# Dockerfile
 FROM python:3.12-slim AS python-base
 
 ENV PYTHONUNBUFFERED=1 \
@@ -12,10 +11,13 @@ ENV PYTHONUNBUFFERED=1 \
     PATH="/opt/poetry/bin:$PATH"
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-        curl libpq-dev gcc libc-dev \
+        curl \
+        libpq-dev \
+        gcc \
+        libc-dev \
     && curl -sSL https://install.python-poetry.org | python3 - \
     && poetry --version \
-    && apt-get purge --auto-remove -y gcc \
+    && apt-get purge --auto-remove -y gcc libc-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
