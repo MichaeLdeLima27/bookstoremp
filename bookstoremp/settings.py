@@ -51,9 +51,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bookstoremp.wsgi.application"
 
+# Detecta se está rodando no GitHub Actions
+is_ci = os.getenv("CI") == "true"
+
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"postgres://{os.getenv('DB_USER', 'postgres')}:{os.getenv('DB_PASSWORD', 'postgres')}@{os.getenv('DB_HOST', 'db')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME', 'bookstore')}"
+        default=f"postgres://{os.getenv('DB_USER', 'postgres')}:{os.getenv('DB_PASSWORD', 'postgres')}@"
+                f"{'localhost' if is_ci else os.getenv('DB_HOST', 'db')}:{os.getenv('DB_PORT', '5432')}/"
+                f"{os.getenv('DB_NAME', 'bookstore')}"
     )
 }
 
@@ -65,11 +70,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 STATIC_URL = "static/"
