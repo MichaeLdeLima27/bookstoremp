@@ -26,5 +26,11 @@ jobs:
     - name: Build da imagem Docker
       run: docker build -t bookstoremp .
 
+    - name: Listar containers antes
+      run: docker ps -a
+
     - name: Testar execução do container
-      run: docker run -d --env-file .env bookstoremp
+      run: docker run --rm --env-file .env bookstoremp
+
+    - name: Listar containers depois
+      run: docker ps -a
