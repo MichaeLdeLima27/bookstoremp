@@ -26,12 +26,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      DB_NAME: bookstore
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_HOST: db
-      DB_PORT: 5432
+    env_file:
+      - .env          # Usa seu .env direto
     networks:
       - bookstore-network
 
