@@ -14,8 +14,7 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(",")] if ALLOWED_HOSTS else []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 INSTALLED_APPS = [
     "bookstore",
@@ -58,16 +57,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bookstoremp.wsgi.application"
 
-# Para detectar se está rodando no CI (GitHub Actions)
+# Detecta se está em ambiente de CI
 is_ci = os.getenv("CI") == "true"
 
 DATABASES = {
     "default": dj_database_url.config(
         default=(
-            f"postgres://{os.getenv('DB_USER', 'postgres')}:"
-            f"{os.getenv('DB_PASSWORD', 'postgres')}@"
-            f"{'localhost' if is_ci else os.getenv('DB_HOST', 'localhost')}:"
-            f"{os.getenv('DB_PORT', '5432')}/"
+            f"postgres://{os.getenv('DB_USER', 'postgres')}:" +
+            f"{os.getenv('DB_PASSWORD', 'postgres')}@" +
+            f"{'localhost' if is_ci else os.getenv('DB_HOST', 'localhost')}:" +
+            f"{os.getenv('DB_PORT', '5432')}/" +
             f"{os.getenv('DB_NAME', 'bookstore')}"
         ),
         conn_max_age=600,
@@ -83,14 +82,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Necessário para produção
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -101,3 +98,9 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
+
+# Ativa configs automáticas se estiver em ambiente da Vercel
+if os.getenv("VERCEL"):
+    import django_heroku
+    django_heroku.settings(locals())
+
