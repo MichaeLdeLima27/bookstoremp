@@ -7,7 +7,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['Michaelmp.pythonanywhere.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'michaelmp.pythonanywhere.com',
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
