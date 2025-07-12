@@ -11,7 +11,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
-    'michaelmp.pythonanywhere.com',
+    'Michaelmp.pythonanywhere.com',
 ]
 
 INSTALLED_APPS = [
@@ -41,7 +41,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = "bookstore.urls"
+ROOT_URLCONF = "bookstoremp.urls"
 
 TEMPLATES = [
     {
@@ -59,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "bookstore.wsgi.application"
+WSGI_APPLICATION = "bookstoremp.wsgi.application"
 
 DATABASES = {
     "default": {
