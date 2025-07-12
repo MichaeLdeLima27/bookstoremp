@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
@@ -46,7 +46,7 @@ ROOT_URLCONF = "bookstoremp.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "bookstore", "templates")],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],  # ajustado para 'templates' dentro do BASE_DIR
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
