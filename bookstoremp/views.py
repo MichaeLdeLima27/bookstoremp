@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from .models import Product
+from product.models import Product
 import git
 
 @csrf_exempt
