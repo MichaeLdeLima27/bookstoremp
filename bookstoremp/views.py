@@ -3,7 +3,6 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from .models import Product
-
 import git
 
 @csrf_exempt
@@ -13,8 +12,7 @@ def update(request):
         origin = repo.remotes.origin
         origin.pull()
         return HttpResponse("Updated code on PythonAnywhere")
-    else:
-        return HttpResponse("Couldn't update the code on PythonAnywhere")
+    return HttpResponse("Couldn't update the code on PythonAnywhere")
 
 def hello_world(request):
     template = loader.get_template('hello_world.html')
