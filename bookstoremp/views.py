@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from .models import Product
 
 import git
 
@@ -21,3 +23,9 @@ def hello_world(request):
 def home(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render({}, request))
+
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    template = loader.get_template('product_detail.html')
+    context = {'product': product}
+    return HttpResponse(template.render(context, request))
