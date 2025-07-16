@@ -10,7 +10,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from product.models.product import Product
-from .serializers import ProductSerializer
+from product.serializers.product_serializer import ProductSerializer
+
 
 
 @csrf_exempt
