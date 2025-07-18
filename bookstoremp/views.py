@@ -8,10 +8,11 @@ from rest_framework.generics import RetrieveAPIView, ListCreateAPIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 from product.models.product import Product
 from product.serializers.product_serializer import ProductSerializer
-
 
 
 @csrf_exempt
@@ -48,3 +49,10 @@ class ProductDetailAPIView(RetrieveAPIView):
 class ProductListCreateAPIView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class OrderProtectedView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"message": "Você está autenticado e visualizando suas orders."})

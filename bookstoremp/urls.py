@@ -7,8 +7,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', views.hello_world, name='hello_world'),
     path('update_server/', views.update, name='update'),
-    path('api-token-auth/', include('rest_framework.urls')),  # login/logout DRF browsable API
-    path('api/products/', views.ProductListCreateAPIView.as_view(), name='api-product-list-create'),  # Listar e criar produtos
-    path('api/products/<int:pk>/', views.ProductDetailAPIView.as_view(), name='api-product-detail'),  # Detalhe produto API
-    path('product/<int:pk>/', views.product_detail, name='product_detail'),  # Página HTML de produto
+
+    path('api-token-auth/', include('rest_framework.urls')),  # Autenticação por session/login
+
+    path('api/products/', views.ProductListCreateAPIView.as_view(), name='api-product-list-create'),
+    path('api/products/<int:pk>/', views.ProductDetailAPIView.as_view(), name='api-product-detail'),
+
+    path('product/<int:pk>/', views.product_detail, name='product_detail'),
+
+    path('api/orders/', views.OrderProtectedView.as_view(), name='api-orders'),
 ]
